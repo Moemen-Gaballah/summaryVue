@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue JS</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app">
+    <h1>Title</h1>
+    <div @click="liked =! liked" :class="className">{{likes}} Like</div>
+</div>
+<script>
+    new Vue({
+        'el':'#app',
+        'data': {
+            liked: false,
+            likes: 5
+        },
+        'computed': {
+            className: function () {
+                return (this.liked)? 'liked' : '';
+            },
+        },
+        'watch': {
+            liked: function (value) {
+               if(value)
+                   this.likes ++;
+               else
+                   this.likes --;
+            }
+        }
+    });
+</script>
+
+<style>
+    .liked{
+        color: blue;
+        font-weight: bold;
+    }
+</style>
+
+</body>
+</html>

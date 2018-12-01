@@ -1,0 +1,1 @@
+part 2 = second video in channel devmarketer for vue.js

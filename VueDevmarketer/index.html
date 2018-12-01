@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<style>
+    #app{
+        height: 100vh;
+        width: 100vw;
+        background: url("https://source.unsplash.com/category/nature/1920*1080") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    #submit-form {
+        margin-top: 40px;
+    }
+
+    .lead-form {
+        background-color: rgba(255,255,255,0.6);
+        border-radius: 5px;
+        padding: 10px 50px 30px 50px;
+        margin-top: 100px;
+    }
+
+    span.city-span {
+        color: #444;
+        text-transform: uppercase;
+        margin-left: 5px;
+        margin-top: 10px;
+    }
+
+    .form-control {
+        margin-bottom: 3px;
+    }
+</style>
+<body>
+<div id="app" class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="lead-form">
+                <h1 class="text-center">Fill out this Form</h1>
+                <hr>
+                <div class="row">
+                   <div class="col-md-6">
+                       <input type="text" class="form-controller" placeholder="Starting Zip" v-model="startingZip">
+                       <span class="city-span">{{startingCity}}</span>
+                   </div>
+                    <div class="col-md-6">
+                       <input type="text" class="form-controller" placeholder="Ending Zip" v-model="endingZip">
+                       <span class="city-span">{{endingCity}}</span>
+                   </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-block" id="submit-form">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            startingZip: '',
+            startingCity: '',
+            endingZip: '',
+            endingCity: '',
+        },
+        watch: {
+            startingZip: function () {
+                this.startingCity = ''
+                if (this.startingZip.length == 5) {
+                    // Call Api Method
+                    this.lookupStartingZip()
+                }
+            },endingZip: function () {
+                this.endingCity = ''
+                if (this.endingZip.length == 5) {
+                    // Call Api Method
+                    this.lookupEndingZip()
+                }
+            }
+        },
+        methods: {
+            lookupStartingZip: _.debounce(function() {
+                var app = this
+                app.startingCity = "Searching..."
+                axios.get('http://ziptasticapi.com/' + app.startingZip)
+                    .then(function (response) {
+                        app.startingCity = response.data.city + ', ' + response.data.state
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        app.startingCity = "Invalid Zipcode"
+                    })
+            }, 500),
+            lookupEndingZip: _.debounce(function() {
+                var app = this
+                app.endingCity = "Searching..."
+                axios.get('http://ziptasticapi.com/' + app.endingZip)
+                    .then(function (response) {
+                        app.endingCity = response.data.city + ', ' + response.data.state
+                    })
+                    .catch(function (error) {
+                        app.endingCity = "Invalid Zipcode"
+                    })
+            }, 500)
+        }
+    })
+</script>
+</body>
+</html>

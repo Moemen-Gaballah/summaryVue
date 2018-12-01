@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue JS</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://use.fontawesome.com/f8f42c5404.js"></script>
+<div id="app">
+   <span class="fa fa-star" v-for="item in rate"></span>
+   <span class="fa fa-star-o" v-for="item in 5 - rate"></span>
+</div>
+<script>
+    new Vue({
+        'el':'#app',
+        data:{
+            rate:3
+        },
+
+    });
+</script>
+
+<style>
+    .has-border{
+        border: solid 1px #CCC;
+    }
+    .rect{
+        width: 100px;height: 100px;
+    }
+    .blue{
+        background: blue;
+    }
+    .red{
+        background: red;
+    }
+</style>
+
+</body>
+</html>

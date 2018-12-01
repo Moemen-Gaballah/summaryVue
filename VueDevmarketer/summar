@@ -1,0 +1,65 @@
+// Summar Vue js
+
+v-text    // To inner text
+// example  <h1 v-text="message"></h1>
+message: 'Hello Vue World',
+
+v-html // to execute Html
+// example   <h1 v-html="intro"></h1>
+ intro: "Welcome to the Tutorial <small>It id all about Vue.js</small>"
+
+v-show // to show or hidden html in page form true or false // == display none display inline
+// example     <h1 v-show="viewed">You have viewed this page</h1>
+
+v-if // show if true or hidden if false
+v-else // show if false or hidden if true
+
+v-pre // Show output {{ message }} // don't execute code vue
+v-once // execute code vue One Time cant be change it
+
+v-bind // bind data
+// example // bind title == title in vue
+<h1 v-bind:title="title">{{message}}</h1>
+
+v-for // v-for == Foreach
+// example
+<ul>
+    <li style="list-style-type:none;" v-for="todo in todos">{{todo.id}}- {{todo.text}}</li>
+</ul>
+
+v-model //
+
+
+// v-on:click="countDown" == @click="countDown"
+// example
+    <h1>Count: {{ count }}</h1>
+    <button @click="countUp" class="btn btn-primary">Count Up</button>
+    <button v-on:click="countDown" class="btn btn-primary">Count Down</button>
+
+
+
+// Code
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue World',
+            intro: "Welcome to the Tutorial <small>It id all about Vue.js</small>",
+            viewed: true,
+             title: "Boo Ya!",
+              todos: [
+                 { text: 'Learn Vue', id: 1 },
+                 { text: 'Like the Video', id: 2},
+                 { text: 'Subscribe to DevMarketer', id: 3},
+             ]
+        },
+        methods: {
+            countUp: function () {
+               this.count += 1
+            },countDown: function () {
+               this.count -= 1
+            }
+        }
+    })
+</script>

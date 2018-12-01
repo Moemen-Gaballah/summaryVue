@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue JS</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app">
+    <div class="rect" v-bind:class="'red'"></div>
+    <div class="rect" :class="objClass"></div>
+    <button @click="active=!active">Toggle</button>
+</div>
+<script>
+    new Vue({
+        'el':'#app',
+        'data':{
+            active: true
+        },
+        'computed': {
+            objClass: function () {
+                return {blue:this.active,red:!this.active, 'has-border':true}
+            }
+        }
+    });
+</script>
+
+<style>
+    .has-border{
+        border: solid 1px #CCC;
+    }
+    .rect{
+        width: 100px;height: 100px;
+    }
+    .blue{
+        background: blue;
+    }
+    .red{
+        background: red;
+    }
+</style>
+
+</body>
+</html>
